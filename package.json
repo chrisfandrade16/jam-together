@@ -22,7 +22,8 @@
     "start": "react-scripts start",
     "server": "nodemon private/index.js",
     "build": "react-scripts build",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "dev": "nodemon private/index.js"
   },
   "eslintConfig": {
     "extends": "react-app"
