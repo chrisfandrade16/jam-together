@@ -21,7 +21,6 @@
   "scripts": {
     "start": "react-scripts start",
     "heroku-postbuild": "node private/index.js",
-    "server": "node private/index.js",
     "build": "react-scripts build",
     "eject": "react-scripts eject"
   },
