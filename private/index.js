@@ -6,7 +6,7 @@ const userRouter = require("./routes/api/user.js");
 const sessionRouter = require("./routes/api/session.js");
 
 const server = express();
-const port = process.env.port || 5000;
+const port = process.env.PORT || 5000;
 
 mongoose.connect(database.mongoURI, {useNewUrlParser: true, useUnifiedTopology: true}).then(() => console.log("Database connected...")).catch((err) => console.log(err));
 
