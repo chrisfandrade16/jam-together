@@ -46,7 +46,7 @@ export async function onButtonClickSignUp() {
     });;
 
     const { signUpEmail, signUpUsername, signUpPassword } = this.state;
-    const result = await fetch("api/signup", {
+    const result = await fetch("/api/signup", {
         method: "POST",
         headers: {
             "Content-Type" : "application/json"
