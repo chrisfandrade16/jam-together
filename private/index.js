@@ -27,15 +27,8 @@ server.use("/api", userRouter);
 server.use("/api", sessionRouter);
 server.use(express.static(path.join(__dirname, "../build")));
 
-if(process.env.NODE_ENV === "production") { 
-    server.get("*", (request, result) => { 
-        result.sendFile(path.join(__dirname + "../build/index.html"));
-    });
-}
-else {
-    server.get("*", (request, result) => { 
-        result.sendFile(path.join(__dirname + "../public/index.html"));
-    });
-}
+server.get("*", (request, result) => { 
+    result.sendFile(path.join(__dirname + "../build/index.html"));
+});
 
 server.listen(port, () => console.log(`Server now running on port ${port}...`));
