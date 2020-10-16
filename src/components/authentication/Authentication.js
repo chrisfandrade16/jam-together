@@ -39,6 +39,9 @@ export default class Authentication extends React.Component {
             const { token } = object;
             const result = await fetch("http://localhost:5000/api/verify/?token=" + token);
             const json = await result.json();
+
+            console.log(json);
+            console.log(token);
     
             if(json.success) {
                 this.setState({

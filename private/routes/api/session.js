@@ -113,7 +113,7 @@ sessionRouter.post("/signin", (request, result) => {
 sessionRouter.get("/verify", (request, result) => {
     const token = request.query.token;
 
-    Session.find({ id: token }, (error, sessions) => {
+    Session.find({ _id: token }, (error, sessions) => {
         if(error) {
             return result.send({
                 success: false,
@@ -141,7 +141,7 @@ sessionRouter.delete("/signout", (request, result) => {
     const { body } = request;
     const { token } = body;
 
-    Session.deleteOne({ id: token }, (error) => {
+    Session.deleteOne({ _id: token }, (error) => {
         if(error) {
             return result.send({
                 success: false,
