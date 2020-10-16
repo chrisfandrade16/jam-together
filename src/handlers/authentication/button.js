@@ -7,7 +7,7 @@ export async function onButtonClickSignIn() {
 
     const { signInIdentifier, signInPassword } = this.state;
     const type = signInIdentifier.includes("@")  ? "email" : "username";
-    const result = await fetch("http://localhost:5000/api/signin", {
+    const result = await fetch("/api/signin", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -46,7 +46,7 @@ export async function onButtonClickSignUp() {
     });;
 
     const { signUpEmail, signUpUsername, signUpPassword } = this.state;
-    const result = await fetch("http://localhost:5000/api/signup", {
+    const result = await fetch("api/signup", {
         method: "POST",
         headers: {
             "Content-Type" : "application/json"
@@ -85,7 +85,7 @@ export async function onButtonClickSignOut() {
 
     if(object && object.token) {
         const { token } = object;
-        const result = await fetch("http://localhost:5000/api/signout", {
+        const result = await fetch("/api/signout", {
         method: "DELETE",
         headers: {
             "Content-Type" : "application/json"
