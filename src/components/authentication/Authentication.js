@@ -1,9 +1,13 @@
-import React from "react";
-import { getFromStorage } from "../../utilities/authentication/storage.js";
-import { onInputChangeSignInIdentifier, onInputChangeSignInPassword, onInputChangeSignUpEmail, onInputChangeSignUpUsername, onInputChangeSignUpPassword } from "../../handlers/authentication/input.js";
-import { onButtonClickSignIn, onButtonClickSignUp, onButtonClickSignOut } from "../../handlers/authentication/button.js";
+import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
+import { getFromStorage } from "../../utilities/storage.js";
+import { onButtonClickSignIn, onButtonClickSignUp } from "../../utilities/authentication/button.js";
+import { onDivClickSignIn, onDivClickSignUp } from "../../utilities/authentication/div.js";
+import { onInputChangeSignInIdentifier, onInputChangeSignInPassword, onInputChangeSignUpEmail, onInputChangeSignUpUsername, onInputChangeSignUpPassword, onInputChangeRememberMe } from "../../utilities/authentication/input.js";
+import loading_gif from '../../images/loading.gif';
+import "../../styles/authentication/authentication.css";
 
-export default class Authentication extends React.Component {
+export default class Authentication extends Component {
     constructor(props) {
         super(props);
 
@@ -15,22 +19,28 @@ export default class Authentication extends React.Component {
             signInPassword: "",
             signUpEmail: "",
             signUpUsername: "",
-            signUpPassword: ""
+            signUpPassword: "",
+            signInOrUp: "IN",
+            rememberMe: false
         };
-        
+
+        this.onButtonClickSignIn = onButtonClickSignIn.bind(this);
+        this.onButtonClickSignUp = onButtonClickSignUp.bind(this);
+
+        this.onDivClickSignIn = onDivClickSignIn.bind(this);
+        this.onDivClickSignUp = onDivClickSignUp.bind(this);
+
         this.onInputChangeSignInIdentifier = onInputChangeSignInIdentifier.bind(this);
         this.onInputChangeSignInPassword = onInputChangeSignInPassword.bind(this);
         this.onInputChangeSignUpEmail = onInputChangeSignUpEmail.bind(this);
         this.onInputChangeSignUpUsername = onInputChangeSignUpUsername.bind(this);
         this.onInputChangeSignUpPassword = onInputChangeSignUpPassword.bind(this);
-        this.onButtonClickSignIn = onButtonClickSignIn.bind(this);
-        this.onButtonClickSignUp = onButtonClickSignUp.bind(this);
-        this.onButtonClickSignOut = onButtonClickSignOut.bind(this);
+        this.onInputChangeRememberMe = onInputChangeRememberMe.bind(this);
     }
 
     async componentDidMount() {
         this.setState({
-            isLoading: true
+            isLoading: true,
         });
     
         const object = await getFromStorage("jam-together");
@@ -39,9 +49,6 @@ export default class Authentication extends React.Component {
             const { token } = object;
             const result = await fetch("/api/verify/?token=" + token);
             const json = await result.json();
-
-            console.log(json);
-            console.log(token);
     
             if(json.success) {
                 this.setState({
@@ -63,49 +70,66 @@ export default class Authentication extends React.Component {
     }
 
     render() {
-        const { isLoading, token, message, signInIdentifier, signInPassword, signUpEmail, signUpUsername, signUpPassword } = this.state;
+        const { isLoading, token, message, signInIdentifier, signInPassword, signUpEmail, signUpUsername, signUpPassword, signInOrUp, rememberMe} = this.state;
 
         if(isLoading) {
             return(
-                <div>
-                    <p>Loading...</p>
+                <div className="wallpaper">
+                    <img className="loading" src={loading_gif} alt="Loading Gif"></img>
                 </div>
             );
         }
 
         if(!token) {
-            return(
-                <div>
-                    {   
-                        (message) ? (<p>{message}</p>) : (null)
-                    }
-                    <p>Sign In</p>
-                    <br></br>
-                    <input type="text" placeholder="Email or Username" value={signInIdentifier} onChange={this.onInputChangeSignInIdentifier}></input>
-                    <br></br>
-                    <input type="password" placeholder="Password" value={signInPassword} onChange={this.onInputChangeSignInPassword}></input>
-                    <br></br>
-                    <button onClick={this.onButtonClickSignIn}>Sign In</button>
-                    <br></br>
-                    <br></br>
-                    <p>Sign Up</p>
-                    <br></br>
-                    <input type="email" placeholder="Email" value={signUpEmail} onChange={this.onInputChangeSignUpEmail}></input>
-                    <br></br>
-                    <input type="text" placeholder="Username" value={signUpUsername} onChange={this.onInputChangeSignUpUsername}></input>
-                    <br></br>
-                    <input type="password" placeholder="Password" value={signUpPassword} onChange={this.onInputChangeSignUpPassword}></input>
-                    <br></br>
-                    <button onClick={this.onButtonClickSignUp}>Sign Up</button>
-                </div>
-            );
+            if(signInOrUp === "IN") {
+                return(
+                    <div className="wallpaper">
+                        <div className="box">
+                            <div className="navigation">
+                                <div className="signinup" onClick={this.onDivClickSignIn}>Sign In</div>
+                                <div className="signinup" onClick={this.onDivClickSignUp}>Sign Up</div>
+                            </div>
+                            <div className="message">{message}</div>
+                            <div className="form">
+                                <div className="label">Email or Username</div>
+                                <input className="input" type="text" value={signInIdentifier} onChange={this.onInputChangeSignInIdentifier}></input>
+                                <div className="label">Password</div>
+                                <input className="input" type="password" value={signInPassword} onChange={this.onInputChangeSignInPassword}></input>
+                                <div className="rememberme">Remember Me</div>
+                                <input className="input" type="checkbox" checked={rememberMe} onChange={this.onInputChangeRememberMe}></input>
+                            </div>
+                            <button className="button" onClick={this.onButtonClickSignIn}>Sign In</button>
+                        </div>
+                    </div>
+                );
+            }
+            else if(signInOrUp === "UP") {
+                return(
+                    <div className="wallpaper">
+                        <div className="box">
+                            <div className="navigation">
+                                <div className="signinup" onClick={this.onDivClickSignIn}>Sign In</div>
+                                <div className="signinup" onClick={this.onDivClickSignUp}>Sign Up</div>
+                            </div>
+                            <div className="message">{message}</div>
+                            <div className="form">
+                                <div className="label">Email</div>
+                                <input className="input" type="text" value={signUpEmail} onChange={this.onInputChangeSignUpEmail}></input>
+                                <div className="label">Username</div>
+                                <input className="input" type="text" value={signUpUsername} onChange={this.onInputChangeSignUpUsername}></input>
+                                <div className="label">Password</div>
+                                <input className="input" type="password" value={signUpPassword} onChange={this.onInputChangeSignUpPassword}></input>
+                            </div>
+                            <button className="button" onClick={this.onButtonClickSignUp}>Sign Up</button>
+                        </div>
+                    </div>
+                );
+            }
         }
 
         return(
-            <div>
-                <p>Account</p>
-                <button onClick={this.onButtonClickSignOut}>Sign Out</button>
-            </div>
+            <Redirect to="/lobbies"></Redirect>
         );
     }
 };
+

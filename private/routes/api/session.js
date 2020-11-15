@@ -41,6 +41,7 @@ sessionRouter.post("/signin", (request, result) => {
             }
     
             const session = new Session();
+            session.id = user._id.valueOf();
     
             session.save((error) => {
                 if(error) {
@@ -53,7 +54,7 @@ sessionRouter.post("/signin", (request, result) => {
                 return result.send({
                     success: true,
                     message: "Sign in successful.",
-                    token: session._id
+                    token: session.id
                 });
             });
         });
@@ -85,6 +86,7 @@ sessionRouter.post("/signin", (request, result) => {
             }
     
             const session = new Session();
+            session.id = user._id.valueOf();
     
             session.save((error) => {
                 if(error) {

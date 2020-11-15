@@ -27,3 +27,9 @@ export async function onInputChangeSignUpPassword(event) {
         signUpPassword: event.target.value
     });
 };
+
+export async function onInputChangeRememberMe(event) {
+    this.setState({
+        rememberMe: event.target.checked
+    });
+};

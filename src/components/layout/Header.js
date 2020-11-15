@@ -1,28 +1,19 @@
-import React from "react";
-import { getTotalStyle, getLinkStyle } from "../../styles/layout/header.js";
+import React, { Component } from "react";
+import "../../styles/layout/header.css";
 
-export default class Header extends React.Component {
+export default class Header extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
 
         };
-        
-        this.getTotalStyle = getTotalStyle.bind(this);
-        this.getLinkStyle = getLinkStyle.bind(this);
     }
 
     render() {
         return(
-            <div style={this.getTotalStyle}>
-                <a href="/lobbies" style={this.getLinkStyle}>
+            <div className="total">
 
-                </a>
-
-                <a href="/profile" style={this.getLinkStyle}>
-                    
-                </a>
             </div>
         );
     }

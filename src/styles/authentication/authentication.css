@@ -1,0 +1,100 @@
+.wallpaper {
+    background-color: #9E9E9E;
+    width: 1920px;
+    height: 937px;
+}
+
+.box {
+    display: grid;
+    position: relative;
+    width: 30%;
+    height: 50%;
+    top: 25%;
+    left: 35%;
+    background-color: #FFFFFF;
+}
+
+.navigation {
+    display: flex;
+    justify-content: space-evenly;
+    position: relative;
+    width: 100%;
+    height: 25%;
+    margin-top: 3%;
+}
+
+.signinup {
+    font-family: "Rowdies", cursive;
+    color: #9E9E9E;
+    border-bottom: 1.5px solid #9E9E9E;
+}
+
+.signinup:hover {
+    color: #E3163D;
+    border-color: #E3163D;
+    transition: 0.5s;
+}
+
+.form {
+    display: grid;
+    height: 250px;
+}
+
+.label {
+    position: relative;
+    width: 50%;
+    color: #E3163D;
+    margin-left: 7%;
+}
+
+.rememberme {
+    position: relative;
+    width: 50%;
+    color: #E3163D;
+    margin-left: 41%;
+}
+
+.input {
+    position: relative;
+    width: 85%;
+    border: none;
+    border-bottom: 1.5px solid #9E9E9E;
+    margin-top: 3%;
+    margin-left: 7%;
+    margin-bottom: 3%;
+}
+
+.message {
+    position: relative;
+    margin-left: 7%;
+    color: #778899;
+}
+
+.button {
+    position: relative;
+    left: 35%;
+    bottom: 40%;
+    width: 30%;
+    background-color: transparent;
+    border: 2px double #9E9E9E;
+    color: #9E9E9E;
+}
+
+.button:hover {
+    border-color: #E3163D;
+    color: #E3163D;
+    transition: 0.5s;
+}
+
+.loading {
+    position: relative;
+    left: 45%;
+    top: 30%;
+}
+
+/* 
+    red: #E3163D
+    white: #FFFFFF
+    lighter grey: #9E9E9E
+    darker grey: #778899
+*/

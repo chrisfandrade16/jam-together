@@ -1,10 +1,10 @@
-import React from "react";
-import { Router } from '@reach/router';
+import React, { Component } from "react";
+import { BrowserRouter, Route } from "react-router-dom";
 import Authentication from "./authentication/Authentication";
 import Lobbies from "./lobbies/Lobbies";
 import Profile from "./profile/Profile";
 
-export default class App extends React.Component {
+export default class App extends Component {
     constructor(props) {
         super(props);
 
@@ -16,13 +16,11 @@ export default class App extends React.Component {
     render() {
         return(
             <div className="App">
-                <Router>
-                    <Authentication path="/"></Authentication>
-
-                    <Lobbies path ="/lobbies"></Lobbies>
-
-                    <Profile path ="/profile"></Profile>
-                </Router>
+                <BrowserRouter>
+                    <Route path="/" component={Authentication}></Route>
+                    <Route path="/lobbies" component={Lobbies}></Route>
+                    <Route path="/profile" component={Profile}></Route>
+                </BrowserRouter>
             </div>
         );
     }

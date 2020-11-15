@@ -1,0 +1,1 @@
+On user deletion, local storage must be wiped (just set to empty string), and session ID must be equal to the user's ID.

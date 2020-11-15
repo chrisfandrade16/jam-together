@@ -1,11 +1,11 @@
-import { getFromStorage, setInStorage } from "../../utilities/authentication/storage.js";
+import { setInStorage } from "../storage.js";
 
 export async function onButtonClickSignIn() {
     this.setState({
         isLoading: true
     });
 
-    const { signInIdentifier, signInPassword } = this.state;
+    const { signInIdentifier, signInPassword, rememberMe } = this.state;
     const type = signInIdentifier.includes("@")  ? "email" : "username";
     const result = await fetch("/api/signin", {
         method: "POST",
@@ -19,9 +19,11 @@ export async function onButtonClickSignIn() {
     });
     const json = await result.json();
 
-    await setInStorage("jam-together", { 
-        token: json.token
-    });
+    if(rememberMe) {
+        await setInStorage("jam-together", { 
+            token: json.token
+        });
+    }
 
     if(json.success) {
         this.setState({
@@ -43,7 +45,7 @@ export async function onButtonClickSignIn() {
 export async function onButtonClickSignUp() {
     this.setState({
         isLoading: true
-    });;
+    });
 
     const { signUpEmail, signUpUsername, signUpPassword } = this.state;
     const result = await fetch("/api/signup", {
@@ -72,47 +74,6 @@ export async function onButtonClickSignUp() {
         this.setState({
             isLoading: false,
             message: json.message,
-        });
-    }
-};
-
-export async function onButtonClickSignOut() {
-    this.setState({
-        isLoading: true
-    });;
-
-    const object = await getFromStorage("jam-together");
-
-    if(object && object.token) {
-        const { token } = object;
-        const result = await fetch("/api/signout", {
-        method: "DELETE",
-        headers: {
-            "Content-Type" : "application/json"
-        },
-        body: JSON.stringify({
-            token: token
-        })
-    });
-        const json = await result.json();
-
-        if(json.success) {
-            this.setState({
-                isLoading: false,
-                token: "",
-                message: json.message
-            });
-        }
-        else {
-            this.setState({
-                isLoading: false,
-                message: json.message
-            });
-        }
-    }
-    else {
-        this.setState({ 
-            isLoading: false,
         });
     }
 };
