@@ -1,9 +1,7 @@
 import { setInStorage } from "../storage.js";
 
 export async function onButtonClickSignIn() {
-    this.setState({
-        isLoading: true
-    });
+    this.props.setIsLoading(true);
 
     const { signInIdentifier, signInPassword, rememberMe } = this.state;
     const type = signInIdentifier.includes("@")  ? "email" : "username";
@@ -21,31 +19,42 @@ export async function onButtonClickSignIn() {
 
     if(rememberMe) {
         await setInStorage("jam-together", { 
-            token: json.token
+            userID: json.userID
+        });
+    }
+    else {
+        const result = await fetch("/api/signout", {
+            method: "DELETE",
+            headers: {
+                "Content-Type" : "application/json"
+            },
+            body: JSON.stringify({
+                userID: json.userID
+            })
         });
     }
 
     if(json.success) {
         this.setState({
-            isLoading: false,
-            token: json.token,
             message: json.message,
             signInIdentifier: "",
-            signInPassword: "",
+            signInPassword: ""
         });
+        this.props.setIsLoading(false);
+        this.props.setUserID(json.userID);
     }
     else {
         this.setState({
-            isLoading: false,
             message: json.message,
+            signInIdentifier: "",
+            signInPassword: ""
         });
+        this.props.setIsLoading(false);
     }
 };
 
 export async function onButtonClickSignUp() {
-    this.setState({
-        isLoading: true
-    });
+    this.props.setIsLoading(true);
 
     const { signUpEmail, signUpUsername, signUpPassword } = this.state;
     const result = await fetch("/api/signup", {
@@ -63,17 +72,17 @@ export async function onButtonClickSignUp() {
 
     if(json.success) {
         this.setState({
-            isLoading: false,
             message: json.message,
             signUpEmail: "",
             signUpUsername: "",
             signUpPassword: ""
         });
+        this.props.setIsLoading(false);
     }
     else {
         this.setState({
-            isLoading: false,
             message: json.message,
         });
+        this.props.setIsLoading(false);
     }
 };

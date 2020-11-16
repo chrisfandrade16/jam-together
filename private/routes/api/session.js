@@ -41,7 +41,7 @@ sessionRouter.post("/signin", (request, result) => {
             }
     
             const session = new Session();
-            session.id = user._id.valueOf();
+            session.userID = user.userID;
     
             session.save((error) => {
                 if(error) {
@@ -54,7 +54,7 @@ sessionRouter.post("/signin", (request, result) => {
                 return result.send({
                     success: true,
                     message: "Sign in successful.",
-                    token: session.id
+                    userID: session.userID
                 });
             });
         });
@@ -86,7 +86,7 @@ sessionRouter.post("/signin", (request, result) => {
             }
     
             const session = new Session();
-            session.id = user._id.valueOf();
+            session.userID = user.userID;
     
             session.save((error) => {
                 if(error) {
@@ -99,7 +99,7 @@ sessionRouter.post("/signin", (request, result) => {
                 return result.send({
                     success: true,
                     message: "Sign in successful.",
-                    token: session._id
+                    userID: session.userID
                 });
             });
         });
@@ -113,9 +113,9 @@ sessionRouter.post("/signin", (request, result) => {
 });
 
 sessionRouter.get("/verify", (request, result) => {
-    const token = request.query.token;
+    const userID = request.query.userID;
 
-    Session.find({ _id: token }, (error, sessions) => {
+    Session.find({ userID: userID }, (error, sessions) => {
         if(error) {
             return result.send({
                 success: false,
@@ -129,21 +129,19 @@ sessionRouter.get("/verify", (request, result) => {
                 message: "Error: Session does not exist."
             });
         }
-        else
-        {
-            return result.send({
-                success: true,
-                message: "Error: Session verified."
-            });
-        }
+        
+        return result.send({
+            success: true,
+            message: "Error: Session verified."
+        });
     });
 });
 
 sessionRouter.delete("/signout", (request, result) => {
     const { body } = request;
-    const { token } = body;
+    const { userID } = body;
 
-    Session.deleteOne({ _id: token }, (error) => {
+    Session.deleteOne({ userID: userID }, (error) => {
         if(error) {
             return result.send({
                 success: false,

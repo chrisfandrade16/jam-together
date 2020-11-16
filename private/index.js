@@ -32,10 +32,10 @@ server.use(express.static(path.join(__dirname, "../build")));
 server.get("*", (request, result) => { 
     result.sendFile(path.join(__dirname + "../build/index.html"));
 });
-server.listen(port, () => console.log(`server now running on port ${port}...`));
+server.listen(port, () => console.log(`Server now running on port ${port}...`));
 
 io.on("connection", (socket) => {
-    socket.on("join-room", (room_id, user_id) => {
-        console.log(room_id, user_id);
+    socket.on("join-room", (roomID, userID) => {
+        console.log(roomID, userID);
     })
-})
+});

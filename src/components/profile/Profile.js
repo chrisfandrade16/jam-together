@@ -15,9 +15,7 @@ export default class Profile extends Component {
         return(
             <div>
                 <Layout>
-                    <div className="total">
-                        
-                    </div>
+                    
                 </Layout>
             </div>
         );

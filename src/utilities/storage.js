@@ -29,3 +29,16 @@ export function setInStorage(key, value) {
         console.error(error);
     }
 };
+
+export function removeFromStorage(key) {
+    if(!key) {
+        console.error("Error: Key is missing.");
+    }
+
+    try {
+        localStorage.removeItem(key);
+    }
+    catch(error) {
+        console.error(error);
+    }
+};

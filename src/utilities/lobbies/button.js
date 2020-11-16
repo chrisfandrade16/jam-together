@@ -1,61 +1,37 @@
-import { getFromStorage } from "../storage.js";
-
 export async function onButtonClickSignOut() {
-    this.setState({
-        isLoading: true
+    this.props.setIsLoading(true);
+
+    const userID = this.props.getUserID;
+    const result = await fetch("/api/signout", {
+        method: "DELETE",
+        headers: {
+            "Content-Type" : "application/json"
+        },
+        body: JSON.stringify({
+            userID: userID
+        })
     });
+    const json = await result.json();
 
-    const object = await getFromStorage("jam-together");
-
-    if(object && object.token) {
-        const { token } = object;
-        const result = await fetch("/api/signout", {
-            method: "DELETE",
-            headers: {
-                "Content-Type" : "application/json"
-            },
-            body: JSON.stringify({
-                token: token
-            })
-        });
-        const json = await result.json();
-
-        if(json.success) {
-            this.setState({
-                isLoading: false,
-                signOut: true,
-                message: json.message
-            });
-        }
-        else {
-            this.setState({
-                isLoading: false,
-                message: json.message
-            });
-        }
-    }
-    else {
-        this.setState({ 
-            isLoading: false,
-        });
-    }
+    this.props.setIsLoading(false);
+    this.props.setUserID("");
+    this.props.location.setMessage(json.message);
 };
 
 export async function onButtonClickCreateRoom() {
-    const {user_id} = this.state;
-
+    const userID = this.props.getUserID;
     const result = await fetch("/room/create", {
         method: "POST",
         headers: {
             "Content-Type" : "application/json"
         },
         body: JSON.stringify({
-            user_id: user_id
+            userID: userID
         })
     });
     const json = await result.json();
 
     this.setState({
-        room_id: json.room_id
+        roomID: json.roomID
     });
 };

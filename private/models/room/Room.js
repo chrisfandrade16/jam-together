@@ -1,11 +1,15 @@
 const mongoose = require("mongoose");
 
 const Room = new mongoose.Schema({
-    creatorID: {
+    roomID: {
         type: String,
         default: "" 
     },
-    users: [{
+    userID: {
+        type: String,
+        default: "" 
+    },
+    membersID: [{
         type: String,
         default: ""
     }]

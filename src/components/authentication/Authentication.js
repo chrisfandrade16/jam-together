@@ -4,6 +4,7 @@ import { getFromStorage } from "../../utilities/storage.js";
 import { onButtonClickSignIn, onButtonClickSignUp } from "../../utilities/authentication/button.js";
 import { onDivClickSignIn, onDivClickSignUp } from "../../utilities/authentication/div.js";
 import { onInputChangeSignInIdentifier, onInputChangeSignInPassword, onInputChangeSignUpEmail, onInputChangeSignUpUsername, onInputChangeSignUpPassword, onInputChangeRememberMe } from "../../utilities/authentication/input.js";
+import { setMessage } from "../../utilities/authentication/state.js";
 import loading_gif from '../../images/loading.gif';
 import "../../styles/authentication/authentication.css";
 
@@ -12,8 +13,6 @@ export default class Authentication extends Component {
         super(props);
 
         this.state = {
-            isLoading: false,
-            token: "",
             message: "",
             signInIdentifier: "",
             signInPassword: "",
@@ -23,6 +22,8 @@ export default class Authentication extends Component {
             signInOrUp: "IN",
             rememberMe: false
         };
+
+        this.setMessage = setMessage.bind(this);
 
         this.onButtonClickSignIn = onButtonClickSignIn.bind(this);
         this.onButtonClickSignUp = onButtonClickSignUp.bind(this);
@@ -39,38 +40,32 @@ export default class Authentication extends Component {
     }
 
     async componentDidMount() {
-        this.setState({
-            isLoading: true,
-        });
+        this.props.setIsLoading(true);
     
         const object = await getFromStorage("jam-together");
     
-        if(object && object.token) {
-            const { token } = object;
-            const result = await fetch("/api/verify/?token=" + token);
+        if(object && object.userID) {
+            const { userID } = object;
+            const result = await fetch("/api/verify/?userID=" + userID);
             const json = await result.json();
     
             if(json.success) {
-                this.setState({
-                    isLoading: false,
-                    token: token
-                });
+                this.props.setIsLoading(false);
+                this.props.setUserID(userID);
             }
             else {
-                this.setState({
-                    isLoading: false
-                });
+                this.props.setIsLoading(false);
             }
         }
         else {
-            this.setState({ 
-                isLoading: false
-            });
+            this.props.setIsLoading(false);
         }
     }
 
     render() {
-        const { isLoading, token, message, signInIdentifier, signInPassword, signUpEmail, signUpUsername, signUpPassword, signInOrUp, rememberMe} = this.state;
+        const { message, signInIdentifier, signInPassword, signUpEmail, signUpUsername, signUpPassword, signInOrUp, rememberMe} = this.state;
+        const isLoading = this.props.getIsLoading;
+        const userID = this.props.getUserID;
 
         if(isLoading) {
             return(
@@ -80,7 +75,7 @@ export default class Authentication extends Component {
             );
         }
 
-        if(!token) {
+        if(!userID) {
             if(signInOrUp === "IN") {
                 return(
                     <div className="wallpaper">
@@ -126,9 +121,9 @@ export default class Authentication extends Component {
                 );
             }
         }
-
+        
         return(
-            <Redirect to="/lobbies"></Redirect>
+            <Redirect to={{ pathname: "/lobbies", setMessage: this.setMessage, rememberMe: rememberMe}}></Redirect>
         );
     }
 };

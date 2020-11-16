@@ -14,7 +14,7 @@ export default class Layout extends Component {
 
     render() {
         return(
-            <div className="total">
+            <div>
                 <Header></Header>
 
                 <div className="props">

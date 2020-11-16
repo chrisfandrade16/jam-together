@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const Session = new mongoose.Schema({
-    id: {
+    userID: {
         type: String,
         default: ""
     },

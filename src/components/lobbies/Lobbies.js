@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import Layout from "../layout/Layout";
-import { getFromStorage } from "../../utilities/storage.js";
 import { onButtonClickCreateRoom, onButtonClickSignOut } from "../../utilities/lobbies/button.js";
 import loading_gif from '../../images/loading.gif';
 import "../../styles/lobbies/lobbies.css";
@@ -11,11 +10,7 @@ export default class Lobbies extends Component {
         super(props);
 
         this.state = {
-            isLoading: false,
-            user_id: "",
-            room_id: "",
-            message: "",
-            signOut: false
+            roomID: ""
         };
 
         this.onButtonClickCreateRoom = onButtonClickCreateRoom.bind(this);
@@ -23,33 +18,24 @@ export default class Lobbies extends Component {
     }
 
     async componentDidMount() {
-        this.setState({
-            isLoading: true,
+        const result = await fetch("/room/check", {
+            method: "GET",
+            headers: {
+                "Content-Type" : "application/json"
+            }
         });
-    
-        const object = await getFromStorage("jam-together");
-    
-        if(object && object.token) {
-            const { token } = object;
-            const result = await fetch("/api/verify/?token=" + token);
-            const json = await result.json();
-    
-            if(json.success) {
-                this.setState({
-                    isLoading: false,
-                    user_id: token
-                });
+        const json = await result.json();
+        const rooms = json.rooms;
+
+        let lobbies = document.getElementById("rooms");
+        lobbies.innerHTML = "";
+        if(lobbies) {
+            for(let index = 0; index < rooms.length; index++) {
+                let lobby = document.createElement("li");
+                lobby.textContent = rooms[index].roomID;
+                lobby.style.background = '#E3163D';
+                lobbies.appendChild(lobby);
             }
-            else {
-                this.setState({
-                    isLoading: false
-                });
-            }
-        }
-        else {
-            this.setState({ 
-                isLoading: false
-            });
         }
     }
 
@@ -64,10 +50,11 @@ export default class Lobbies extends Component {
         const rooms = json.rooms;
 
         let lobbies = document.getElementById("rooms");
+        lobbies.innerHTML = "";
         if(lobbies) {
             for(let index = 0; index < rooms.length; index++) {
                 let lobby = document.createElement("li");
-                lobby.textContent = rooms[index].creatorID;
+                lobby.textContent = rooms[index].roomID;
                 lobby.style.background = '#E3163D';
                 lobbies.appendChild(lobby);
             }
@@ -75,7 +62,9 @@ export default class Lobbies extends Component {
     }
 
     render() {
-        const {isLoading, signOut } = this.state;
+        const { isUserSigningOut } = this.state;
+        const isLoading = this.props.getIsLoading;
+        const userID = this.props.getUserID;
         
         if(isLoading) {
             return(
@@ -87,7 +76,14 @@ export default class Lobbies extends Component {
             );
         }
 
-        if(!signOut)
+        if(!userID)
+        {
+            return(
+                <Redirect to="/"></Redirect>
+            );
+        }
+
+        if(!isUserSigningOut)
         {
             return(
                 <Layout>
@@ -101,9 +97,5 @@ export default class Lobbies extends Component {
                 </Layout>
             );
         }
-
-        return(
-            <Redirect to="/"></Redirect>
-        );
     }
 };

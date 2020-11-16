@@ -57,7 +57,7 @@ userRouter.post("/signup", (request, result) => {
             }
 
             const user = new User();
-
+            user.userID = user._id.valueOf();
             user.email = email;
             user.username = username;
             user.password = user.generateHash(password);

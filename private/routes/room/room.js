@@ -1,6 +1,4 @@
 const express = require("express");
-const User = require("../../models/api/User.js");
-const Session = require("../../models/api/Session.js");
 const Room = require("../../models/room/Room.js");
 
 const roomRouter = express.Router();
@@ -10,7 +8,8 @@ roomRouter.post("/create", (request, result) => {
     const { userID } = body;
 
     const room = new Room();
-    room.creatorID = userID;
+    room.roomID = room._id.valueOf();
+    room.userID = userID;
 
     room.save((error) => {
         if(error) {
@@ -23,7 +22,7 @@ roomRouter.post("/create", (request, result) => {
         return result.send({
             success: true,
             message: "Room created.",
-            roomID: room._id.valueOf()
+            roomID: room.roomID
         });
     });
 });

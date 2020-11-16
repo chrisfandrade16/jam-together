@@ -2,6 +2,10 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
 const User = new mongoose.Schema({
+    userID: {
+        type: String,
+        defualt: ""
+    },
     email: {
         type: String,
         default: "" 
@@ -13,6 +17,10 @@ const User = new mongoose.Schema({
     password: {
         type: String,
         default: "" 
+    },
+    time: {
+        type: Date,
+        default: Date.now() 
     }
 });
 
