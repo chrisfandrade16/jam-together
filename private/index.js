@@ -28,9 +28,9 @@ server.use(express.urlencoded({ extended: true}));
 server.use("/api", userRouter);
 server.use("/api", sessionRouter);
 server.use("/room", roomRouter);
-server.use(express.static(path.join(__dirname, "../build")));
+server.use(express.static(path.join(__dirname, "/../build")));
 server.get("*", (request, result) => { 
-    result.sendFile(path.join(__dirname + "../build/index.html"));
+    result.sendFile(path.join(__dirname + "/../build/index.html"));
 });
 server.listen(port, () => console.log(`Server now running on port ${port}...`));
 

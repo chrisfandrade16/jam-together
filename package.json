@@ -19,8 +19,9 @@
     "socket.io": "^3.0.1"
   },
   "scripts": {
-    "start": "node private/index.js",
+    "heroku-prebuild": "node private/index.js",
     "heroku-postbuild": "react-scripts build",
+    "heroku-test": "concurrently \"npm run heroku-prebuild\" \"npm run heroku-postbuild\"",
     "backend": "nodemon private/index.js",
     "frontend": "react-scripts start",
     "dev": "concurrently \"npm run backend\" \"npm run frontend\""

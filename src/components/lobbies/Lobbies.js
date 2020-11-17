@@ -28,12 +28,11 @@ export default class Lobbies extends Component {
         const rooms = json.rooms;
 
         let lobbies = document.getElementById("rooms");
-        lobbies.innerHTML = "";
         if(lobbies) {
+            lobbies.innerHTML = "";
             for(let index = 0; index < rooms.length; index++) {
                 let lobby = document.createElement("li");
-                lobby.textContent = rooms[index].roomID;
-                lobby.style.background = '#E3163D';
+                lobby.textContent = "RoomID: " + rooms[index].roomID;
                 lobbies.appendChild(lobby);
             }
         }
@@ -50,12 +49,11 @@ export default class Lobbies extends Component {
         const rooms = json.rooms;
 
         let lobbies = document.getElementById("rooms");
-        lobbies.innerHTML = "";
         if(lobbies) {
+            lobbies.innerHTML = "";
             for(let index = 0; index < rooms.length; index++) {
                 let lobby = document.createElement("li");
-                lobby.textContent = rooms[index].roomID;
-                lobby.style.background = '#E3163D';
+                lobby.textContent = "RoomID: " + rooms[index].roomID;
                 lobbies.appendChild(lobby);
             }
         }
@@ -86,10 +84,10 @@ export default class Lobbies extends Component {
         if(!isUserSigningOut)
         {
             return(
-                <Layout>
-                    <div className="wallpaper">
-                        <button className="signout" onClick={this.onButtonClickSignOut}>Sign Out</button>
+                <Layout lobbies={{ color: "#778899" }} profile={{ color: "#D3D3D3" }}>
+                    <div className="background">
                         <button className = "createroom" onClick={this.onButtonClickCreateRoom}>Create Room</button>
+                        <button className="signout" onClick={this.onButtonClickSignOut}>Sign Out</button>
                         <ul id="rooms">
 
                         </ul>

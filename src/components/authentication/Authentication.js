@@ -5,7 +5,7 @@ import { onButtonClickSignIn, onButtonClickSignUp } from "../../utilities/authen
 import { onDivClickSignIn, onDivClickSignUp } from "../../utilities/authentication/div.js";
 import { onInputChangeSignInIdentifier, onInputChangeSignInPassword, onInputChangeSignUpEmail, onInputChangeSignUpUsername, onInputChangeSignUpPassword, onInputChangeRememberMe } from "../../utilities/authentication/input.js";
 import { setMessage } from "../../utilities/authentication/state.js";
-import loading_gif from '../../images/loading.gif';
+import loading_gif from "../../images/loading.gif";
 import "../../styles/authentication/authentication.css";
 
 export default class Authentication extends Component {
@@ -81,7 +81,7 @@ export default class Authentication extends Component {
                     <div className="wallpaper">
                         <div className="box">
                             <div className="navigation">
-                                <div className="signinup" onClick={this.onDivClickSignIn}>Sign In</div>
+                                <div className="signinup" onClick={this.onDivClickSignIn} style={{ color: "#778899" }}>Sign In</div>
                                 <div className="signinup" onClick={this.onDivClickSignUp}>Sign Up</div>
                             </div>
                             <div className="message">{message}</div>
@@ -104,7 +104,7 @@ export default class Authentication extends Component {
                         <div className="box">
                             <div className="navigation">
                                 <div className="signinup" onClick={this.onDivClickSignIn}>Sign In</div>
-                                <div className="signinup" onClick={this.onDivClickSignUp}>Sign Up</div>
+                                <div className="signinup" onClick={this.onDivClickSignUp} style={{ color: "#778899" }}>Sign Up</div>
                             </div>
                             <div className="message">{message}</div>
                             <div className="form">

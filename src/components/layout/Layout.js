@@ -15,7 +15,7 @@ export default class Layout extends Component {
     render() {
         return(
             <div>
-                <Header></Header>
+                <Header lobbies={this.props.lobbies} profile={this.props.profile}></Header>
 
                 <div className="props">
                     {this.props.children}

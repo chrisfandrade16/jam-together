@@ -1,7 +1,8 @@
 .wallpaper {
-    background-color: #9E9E9E;
-    width: 1920px;
-    height: 937px;
+    background-color: #E3163D;
+    width: 100vw;
+    height: 100vh;
+    margin: 0px;
 }
 
 .box {
@@ -12,6 +13,8 @@
     top: 25%;
     left: 35%;
     background-color: #FFFFFF;
+    border-radius: 25px;
+    box-shadow: 15px 15px 10px #C21738;
 }
 
 .navigation {
@@ -24,14 +27,11 @@
 }
 
 .signinup {
-    font-family: "Rowdies", cursive;
-    color: #9E9E9E;
-    border-bottom: 1.5px solid #9E9E9E;
+    color: #D3D3D3;
 }
 
 .signinup:hover {
-    color: #E3163D;
-    border-color: #E3163D;
+    color: #E3163D !important;
     transition: 0.5s;
 }
 
@@ -58,10 +58,11 @@
     position: relative;
     width: 85%;
     border: none;
-    border-bottom: 1.5px solid #9E9E9E;
+    border-bottom: 1.5px solid #D3D3D3;
     margin-top: 3%;
     margin-left: 7%;
     margin-bottom: 3%;
+    outline: none;
 }
 
 .message {
@@ -76,8 +77,9 @@
     bottom: 40%;
     width: 30%;
     background-color: transparent;
-    border: 2px double #9E9E9E;
-    color: #9E9E9E;
+    border: 2px double #D3D3D3;
+    color: #D3D3D3;
+    font-family: 'Rowdies', cursive;
 }
 
 .button:hover {
@@ -88,13 +90,15 @@
 
 .loading {
     position: relative;
-    left: 45%;
-    top: 30%;
+    left: 43%;
+    top: 45%;
 }
 
 /* 
-    red: #E3163D
     white: #FFFFFF
-    lighter grey: #9E9E9E
+    bkac: #000000
+    lighter red: #E3163D
+    darker red: #C21738
+    lighter grey: #D3D3D3
     darker grey: #778899
 */
