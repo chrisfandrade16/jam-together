@@ -4,7 +4,7 @@ export default class GIF {
 		this.frames = frames;
         this.slowness = slowness;
         this.frame = 0;
-		this.interval;
+		this.interval = 0;
 	}
 
     
