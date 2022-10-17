@@ -1,3 +1,3 @@
 # Jam Together
 
-Ongoing web application project to allow musicians to form bands online during pandemic.
+Web application project to allow musicians to form bands online during pandemic.
